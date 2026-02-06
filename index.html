@@ -3,343 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto Académico - Minimalist</title>
+    <title>Proyecto Académico</title>
     <style>
-        /* CSS: Estilo Minimalista Blanco y Negro Mejorado */
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            transition: all 0.3s ease;
-        }
+        /* ESTILO MINIMALISTA B/N */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: sans-serif; display: flex; height: 100vh; background: #fff; color: #000; }
         
-        body { 
-            font-family: 'Helvetica', Arial, sans-serif; 
-            display: flex; 
-            min-height: 100vh; 
-            background-color: #ffffff; 
-            color: #000000;
+        /* MENÚ LATERAL */
+        .sidebar { width: 260px; background: #000; color: #fff; padding: 40px 20px; flex-shrink: 0; }
+        .sidebar h2 { font-size: 1rem; margin-bottom: 40px; letter-spacing: 2px; text-align: center; }
+        .sidebar button { 
+            width: 100%; background: none; border: 1px solid #333; color: #ccc; 
+            padding: 12px; margin-bottom: 15px; cursor: pointer; text-align: left; transition: 0.3s;
         }
-        
-        /* Menú Lateral */
-        .sidebar { 
-            width: 250px; 
-            background: #000000; 
-            color: #ffffff; 
-            display: flex; 
-            flex-direction: column; 
-            padding: 40px 20px;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-            position: relative;
-        }
+        .sidebar button:hover { border-color: #fff; color: #fff; }
+        .sidebar button.active { background: #fff; color: #000; border-color: #fff; }
 
-        .sidebar h2 { 
-            font-size: 1.2rem; 
-            letter-spacing: 2px;
-            margin-bottom: 50px; 
-            text-align: center;
-            border-bottom: 1px solid #333;
-            padding-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .sidebar button {
-            background: none; 
-            border: 1px solid #333; 
-            color: #999;
-            padding: 15px; 
-            margin-bottom: 15px; 
-            cursor: pointer; 
-            text-align: left;
-            font-size: 0.9rem;
-            transition: 0.3s;
-            border-radius: 2px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .sidebar button:hover, 
-        .sidebar button.active-tab { 
-            color: #fff;
-            border-color: #fff;
-            background: #222;
-            transform: translateX(5px);
-        }
-
-        .sidebar button.active-tab {
-            border-color: #fff;
-            background: #333;
-        }
-
-        /* Indicador de pestaña activa */
-        .sidebar button::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background: #fff;
-            transform: scaleY(0);
-            transition: transform 0.2s;
-        }
-
-        .sidebar button.active-tab::before {
-            transform: scaleY(1);
-        }
-
-        /* Área de Contenido */
-        .content { 
-            flex-grow: 1; 
-            padding: 60px; 
-            overflow-y: auto; 
-            max-width: calc(100vw - 250px);
-        }
-        
-        .tab-content { 
-            display: none; 
-            max-width: 800px;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        /* CONTENIDO */
+        .content { flex-grow: 1; padding: 60px; overflow-y: auto; }
+        .tab-content { display: none; max-width: 800px; animation: fade 0.4s; }
         .tab-content.active { display: block; }
+        @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Estilos del Evaluador */
-        .evaluador { 
-            margin-top: 30px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 20px;
-            max-width: 500px;
-        }
-        
-        select, input { 
-            padding: 12px; 
-            border: 1px solid #000; 
-            background: #fff;
-            font-size: 1rem;
-            outline: none;
-            transition: border 0.3s;
-            border-radius: 2px;
-        }
+        /* EVALUADOR */
+        .eval-box { margin-top: 20px; display: flex; flex-direction: column; gap: 15px; max-width: 400px; }
+        select, input, button.calc { padding: 12px; border: 1px solid #000; font-size: 1rem; outline: none; }
+        button.calc { background: #000; color: #fff; font-weight: bold; cursor: pointer; }
+        #resultado { margin-top: 20px; padding: 15px; border: 1px dashed #000; min-height: 50px; }
 
-        select:focus, input:focus {
-            border-color: #666;
-            box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
-        }
-
-        .btn-calc { 
-            background: #000; 
-            color: #fff; 
-            border: none; 
-            padding: 15px; 
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s;
-            border-radius: 2px;
-            letter-spacing: 1px;
-        }
-
-        .btn-calc:hover { 
-            background: #333; 
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        #resultado { 
-            margin-top: 20px; 
-            padding: 25px; 
-            border: 2px solid #000;
-            font-weight: bold;
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            background: #f9f9f9;
-            border-radius: 2px;
-            transition: all 0.3s;
-        }
-
-        #resultado.error {
-            border-color: #cc0000;
-            background-color: #fff5f5;
-            color: #cc0000;
-        }
-
-        #resultado.success {
-            border-color: #000;
-            background-color: #f0f0f0;
-        }
-
-        h1 { 
-            font-size: 2.2rem; 
-            margin-bottom: 30px; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        h1::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 60px;
-            height: 3px;
-            background: #000;
-        }
-
-        p { 
-            line-height: 1.8; 
-            margin-bottom: 20px; 
-            text-align: justify; 
-            color: #333; 
-            font-size: 1.05rem;
-        }
-
-        ul { 
-            margin-left: 20px; 
-            margin-bottom: 25px;
-        }
-
-        li { 
-            margin-bottom: 15px; 
-            color: #333; 
-            line-height: 1.7;
-        }
-
-        strong {
-            color: #000;
-        }
-
-        code {
-            background: #f0f0f0;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: monospace;
-            font-size: 0.95rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                padding: 20px;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
-            }
-            
-            .sidebar h2 {
-                width: 100%;
-                margin-bottom: 20px;
-            }
-            
-            .sidebar button {
-                flex: 1;
-                min-width: 150px;
-                text-align: center;
-            }
-            
-            .content {
-                padding: 30px;
-                max-width: 100%;
-            }
-        }
-
-        /* Indicador de carga para evaluador */
-        .loader {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #000;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        h1 { font-size: 1.8rem; margin-bottom: 25px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+        p { line-height: 1.6; margin-bottom: 15px; text-align: justify; }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
+    <nav class="sidebar">
         <h2>MENÚ ACADÉMICO</h2>
-        <button id="btn-historia" class="active-tab" onclick="showTab('historia')">01. HISTORIA DE PI</button>
-        <button id="btn-evaluar" onclick="showTab('evaluar')">02. EVALUAR FUNCIÓN</button>
-        <button id="btn-resumen" onclick="showTab('resumen')">03. RESUMEN VIDEO</button>
-    </div>
+        <button onclick="openTab(event, 'historia')" class="tab-link active">01. HISTORIA DE PI</button>
+        <button onclick="openTab(event, 'evaluar')" class="tab-link">02. EVALUAR FUNCIÓN</button>
+        <button onclick="openTab(event, 'resumen')" class="tab-link">03. RESUMEN VIDEO</button>
+    </nav>
 
-    <div class="content">
-        
-        <div id="historia" class="tab-content active">
+    <main class="content">
+        <section id="historia" class="tab-content active">
             <h1>Historia de Pi</h1>
-            <p>El número π (pi) es una constante matemática fundamental que representa la relación entre la circunferencia de un círculo y su diámetro. Este número irracional, cuyos decimales continúan infinitamente sin repetirse en un patrón, ha fascinado a matemáticos durante milenios. Desde las antiguas civilizaciones babilónica y egipcia, que realizaron las primeras aproximaciones, hasta los matemáticos griegos, el valor de π ha sido objeto de estudio y refinamiento constante a lo largo de la historia.</p>
-            <p>Arquímedes de Siracusa realizó contribuciones significativas en el siglo III a.C., utilizando el método de exhausción con polígonos inscritos y circunscritos para aproximar π entre 3.1408 y 3.1429. Este método geométrico representó un avance fundamental que permaneció como la aproximación más precisa durante siglos. Posteriormente, matemáticos de diversas culturas, incluyendo la china, india e islámica, desarrollaron métodos algorítmicos y series infinitas para calcular π con mayor precisión.</p>
-            <p>En la era moderna, el desarrollo de computadoras ha permitido calcular billones de dígitos de π, aunque para la mayoría de aplicaciones prácticas bastan unas pocas decenas. Más allá de la geometría circular, π aparece en numerosas fórmulas matemáticas y científicas, desde la estadística y la probabilidad hasta la física cuántica y la teoría de relatividad, consolidándose como una de las constantes matemáticas más importantes y ubicuas en la ciencia.</p>
-        </div>
+            <p>El número pi (π) es la constante matemática que indica la relación entre la longitud de una circunferencia y su diámetro. Es un número irracional, lo que significa que no puede ser expresado como una fracción exacta; sus decimales son infinitos y no presentan un patrón repetitivo.</p>
+            <p>Desde la antigüedad, civilizaciones como los babilonios y los egipcios realizaron las primeras aproximaciones. Sin embargo, fue Arquímedes quien, mediante el método de polígonos inscritos y circunscritos, logró determinar su valor con una precisión sin precedentes para su época.</p>
+            <p>En la actualidad, gracias a la computación moderna, se han calculado billones de dígitos de pi. Su uso es fundamental no solo en geometría, sino también en campos avanzados como la física cuántica, la ingeniería y la exploración espacial.</p>
+        </section>
 
-        <div id="evaluar" class="tab-content">
+        <section id="evaluar" class="tab-content">
             <h1>Evaluador de Funciones</h1>
-            <p>Selecciona una función matemática, introduce un valor numérico para x y calcula el resultado.</p>
-            
-            <div class="evaluador">
-                <label for="funcSelect"><strong>Selecciona una función:</strong></label>
-                <select id="funcSelect">
-                    <option value="x**2">f(x) = x² (Función cuadrática)</option>
-                    <option value="x**3">f(x) = x³ (Función cúbica)</option>
-                    <option value="2*x + 5">f(x) = 2x + 5 (Función lineal)</option>
-                    <option value="Math.sqrt(x)">f(x) = √x (Raíz cuadrada)</option>
-                    <option value="Math.sin(x)">f(x) = sen(x) (Función seno)</option>
-                    <option value="Math.cos(x)">f(x) = cos(x) (Función coseno)</option>
-                    <option value="Math.exp(x)">f(x) = e^x (Función exponencial)</option>
-                    <option value="Math.log(x)">f(x) = ln(x) (Logaritmo natural)</option>
-                    <option value="1/x">f(x) = 1/x (Función recíproca)</option>
-                    <option value="Math.abs(x)">f(x) = |x| (Valor absoluto)</option>
-                    <option value="Math.PI * x">f(x) = πx (Pi por x)</option>
+            <div class="eval-box">
+                <select id="func">
+                    <option value="x**2">f(x) = x²</option>
+                    <option value="x**3">f(x) = x³</option>
+                    <option value="Math.sqrt(x)">f(x) = √x</option>
+                    <option value="Math.log(x)">f(x) = ln(x)</option>
+                    <option value="Math.sin(x)">f(x) = sen(x)</option>
+                    <option value="Math.cos(x)">f(x) = cos(x)</option>
+                    <option value="Math.exp(x)">f(x) = e^x</option>
+                    <option value="1/x">f(x) = 1/x</option>
+                    <option value="Math.abs(x)">f(x) = |x|</option>
+                    <option value="Math.PI * x">f(x) = π * x</option>
                 </select>
-                
-                <label for="inputX"><strong>Introduce el valor de x:</strong></label>
-                <input type="number" id="inputX" placeholder="Ejemplo: 3.1416" step="any">
-                
-                <button class="btn-calc" onclick="evaluar()">
-                    <span id="btn-text">CALCULAR</span>
-                    <div id="loader" class="loader"></div>
-                </button>
-                
-                <div id="resultado" class="success">Resultado: -</div>
+                <input type="number" id="valX" placeholder="Valor de x">
+                <button class="calc" onclick="calcular()">CALCULAR</button>
+                <div id="resultado">Resultado: -</div>
             </div>
-            
-            <div style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px;">
-                <h3 style="font-size: 1.2rem; margin-bottom: 15px;">Instrucciones:</h3>
-                <ul style="font-size: 0.95rem;">
-                    <li>Selecciona una función de la lista desplegable</li>
-                    <li>Ingresa un valor numérico para <code>x</code> (puede ser decimal o negativo según la función)</li>
-                    <li>Haz clic en "CALCULAR" para obtener el resultado</li>
-                    <li>Para funciones trigonométricas, <code>x</code> debe estar en radianes</li>
-                </ul>
-            </div>
-        </div>
+        </section>
 
-        <div id="resumen" class="tab-content">
-    <h1>03. Resumen del Video</h1>
-    <p>Python se destaca como un lenguaje de alto nivel y propósito general, cuya sintaxis limpia y cercana al lenguaje humano lo convierte en la herramienta ideal tanto para principiantes como para expertos en ciencia de datos e inteligencia artificial. Durante el curso, se enfatiza su naturaleza de tipado dinámico, lo que permite una mayor agilidad al programar, y se explica su versatilidad para resolver problemas complejos con pocas líneas de código.</p>
-    <p>En cuanto a los fundamentos técnicos, el contenido abarca desde los tipos de datos básicos como cadenas de texto, enteros y booleanos, hasta estructuras compuestas más avanzadas como listas, tuplas y diccionarios. Se subraya la importancia de entender que en Python los índices siempre comienzan en 0 y cómo los operadores lógicos permiten controlar el flujo de una aplicación mediante condicionales, sentencias que son la base de cualquier algoritmo lógico.</p>
-</div>
-            
+        <section id="resumen" class="tab-content">
+            <h1>Resumen del Video: Python</h1>
+            <p>Python se destaca como un lenguaje de alto nivel y propósito general, cuya sintaxis limpia y cercana al lenguaje humano lo convierte en la herramienta ideal tanto para principiantes como para expertos en ciencia de datos e inteligencia artificial. Durante el curso, se enfatiza su naturaleza de tipado dinámico, lo que permite una mayor agilidad al programar, y se explica su versatilidad para resolver problemas complejos con pocas líneas de código.</p>
+            <p>En cuanto a los fundamentos técnicos, el contenido abarca desde los tipos de datos básicos como cadenas de texto, enteros y booleanos, hasta estructuras compuestas más avanzadas como listas, tuplas y diccionarios. Se subraya la importancia de entender que en Python los índices siempre comienzan en 0 y cómo los operadores lógicos permiten controlar el flujo de una aplicación mediante condicionales, sentencias que son la base de cualquier algoritmo lógico.</p>
+        </section>
+    </main>
+
+    <script>
+        // FUNCIÓN PARA CAMBIAR PESTAÑAS
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // FUNCIÓN PARA CALCULAR
+        function calcular() {
+            const x = parseFloat(document.getElementById('valX').value);
+            const formula = document.getElementById('func').value;
+            const resDiv = document.getElementById('resultado');
+
+            if (isNaN(x)) {
+                resDiv.innerHTML = "Error: Ingrese un número.";
+                return;
+            }
+
+            try {
+                const res = eval(formula);
+                resDiv.innerHTML = "Resultado: " + res.toFixed(6);
+            } catch (e) {
+                resDiv.innerHTML = "Error matemático.";
+            }
+        }
+    </script>
+</body>
+</html>
