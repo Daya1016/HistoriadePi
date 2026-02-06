@@ -5,34 +5,213 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Académico</title>
     <style>
-        /* ESTILO MINIMALISTA B/N */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: sans-serif; display: flex; height: 100vh; background: #fff; color: #000; }
+        /* ESTILO MINIMALISTA MEJORADO CON TIPOGRAFÍA VINTAGE MODERNA */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body { 
+            font-family: 'Georgia', 'Times New Roman', serif; 
+            display: flex; 
+            height: 100vh; 
+            background: #f8f8f8; 
+            color: #222; 
+            line-height: 1.7;
+        }
         
         /* MENÚ LATERAL */
-        .sidebar { width: 260px; background: #000; color: #fff; padding: 40px 20px; flex-shrink: 0; }
-        .sidebar h2 { font-size: 1rem; margin-bottom: 40px; letter-spacing: 2px; text-align: center; }
-        .sidebar button { 
-            width: 100%; background: none; border: 1px solid #333; color: #ccc; 
-            padding: 12px; margin-bottom: 15px; cursor: pointer; text-align: left; transition: 0.3s;
+        .sidebar { 
+            width: 280px; 
+            background: #111; 
+            color: #fff; 
+            padding: 50px 25px; 
+            flex-shrink: 0;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
         }
-        .sidebar button:hover { border-color: #fff; color: #fff; }
-        .sidebar button.active { background: #fff; color: #000; border-color: #fff; }
+        
+        .sidebar h2 { 
+            font-size: 1.1rem; 
+            margin-bottom: 50px; 
+            letter-spacing: 3px; 
+            text-align: center; 
+            text-transform: uppercase;
+            color: #ddd;
+            font-weight: 300;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+        }
+        
+        .sidebar button { 
+            width: 100%; 
+            background: none; 
+            border: 1px solid #333; 
+            color: #aaa; 
+            padding: 14px; 
+            margin-bottom: 18px; 
+            cursor: pointer; 
+            text-align: left; 
+            transition: all 0.4s ease;
+            font-family: 'Georgia', serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            border-radius: 2px;
+        }
+        
+        .sidebar button:hover { 
+            border-color: #ccc; 
+            color: #fff; 
+            background: #222;
+            transform: translateX(8px);
+        }
+        
+        .sidebar button.active { 
+            background: #fff; 
+            color: #111; 
+            border-color: #fff;
+            font-weight: bold;
+        }
 
         /* CONTENIDO */
-        .content { flex-grow: 1; padding: 60px; overflow-y: auto; }
-        .tab-content { display: none; max-width: 800px; animation: fade 0.4s; }
-        .tab-content.active { display: block; }
-        @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+        .content { 
+            flex-grow: 1; 
+            padding: 70px; 
+            overflow-y: auto; 
+            background: #fff;
+        }
+        
+        .tab-content { 
+            display: none; 
+            max-width: 900px;
+            animation: fade 0.6s ease-out;
+        }
+        
+        .tab-content.active { 
+            display: block; 
+        }
+        
+        @keyframes fade { 
+            from { 
+                opacity: 0; 
+                transform: translateY(15px); 
+            } 
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            } 
+        }
 
         /* EVALUADOR */
-        .eval-box { margin-top: 20px; display: flex; flex-direction: column; gap: 15px; max-width: 400px; }
-        select, input, button.calc { padding: 12px; border: 1px solid #000; font-size: 1rem; outline: none; }
-        button.calc { background: #000; color: #fff; font-weight: bold; cursor: pointer; }
-        #resultado { margin-top: 20px; padding: 15px; border: 1px dashed #000; min-height: 50px; }
+        .eval-box { 
+            margin-top: 30px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 18px; 
+            max-width: 500px; 
+            padding: 25px;
+            border: 1px solid #e0e0e0;
+            background: #fafafa;
+            border-radius: 4px;
+        }
+        
+        select, input { 
+            padding: 14px; 
+            border: 1px solid #aaa; 
+            font-size: 1rem; 
+            outline: none;
+            font-family: 'Georgia', serif;
+            background: #fff;
+            color: #222;
+            border-radius: 3px;
+            transition: border 0.3s;
+        }
+        
+        select:focus, input:focus {
+            border-color: #222;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+        }
+        
+        button.calc { 
+            background: #222; 
+            color: #fff; 
+            font-weight: bold; 
+            cursor: pointer; 
+            padding: 14px;
+            border: none;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        button.calc:hover { 
+            background: #000; 
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        #resultado { 
+            margin-top: 20px; 
+            padding: 20px; 
+            border: 1px solid #ddd; 
+            min-height: 60px; 
+            font-size: 1.2rem;
+            background: #fff;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+        }
 
-        h1 { font-size: 1.8rem; margin-bottom: 25px; border-bottom: 2px solid #000; padding-bottom: 10px; }
-        p { line-height: 1.6; margin-bottom: 15px; text-align: justify; }
+        h1 { 
+            font-size: 2.2rem; 
+            margin-bottom: 35px; 
+            padding-bottom: 15px; 
+            border-bottom: 3px solid #222;
+            color: #111;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        p { 
+            margin-bottom: 25px; 
+            text-align: justify;
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.8;
+        }
+        
+        /* Responsive */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 30px 20px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .sidebar h2 {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .sidebar button {
+                flex: 1;
+                min-width: 180px;
+                text-align: center;
+            }
+            
+            .content {
+                padding: 40px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -47,9 +226,9 @@
     <main class="content">
         <section id="historia" class="tab-content active">
             <h1>Historia de Pi</h1>
-            <p>El número pi (π) es la constante matemática que indica la relación entre la longitud de una circunferencia y su diámetro. Es un número irracional, lo que significa que no puede ser expresado como una fracción exacta; sus decimales son infinitos y no presentan un patrón repetitivo.</p>
-            <p>Desde la antigüedad, civilizaciones como los babilonios y los egipcios realizaron las primeras aproximaciones. Sin embargo, fue Arquímedes quien, mediante el método de polígonos inscritos y circunscritos, logró determinar su valor con una precisión sin precedentes para su época.</p>
-            <p>En la actualidad, gracias a la computación moderna, se han calculado billones de dígitos de pi. Su uso es fundamental no solo en geometría, sino también en campos avanzados como la física cuántica, la ingeniería y la exploración espacial.</p>
+            <p>El número pi (π) es una de las constantes matemáticas más fascinantes y universales, representando la relación entre la circunferencia de un círculo y su diámetro. Desde tiempos inmemoriales, esta constante ha despertado la curiosidad de matemáticos, filósofos y científicos, convirtiéndose en un símbolo de la búsqueda humana por comprender las leyes fundamentales del universo. Su naturaleza irracional implica que sus decimales se extienden infinitamente sin repetirse en ningún patrón discernible, un hecho que ha alimentado siglos de investigación y especulación matemática.</p>
+            <p>Las primeras aproximaciones a pi se remontan a civilizaciones antiguas como la babilónica y la egipcia, quienes mediante métodos prácticos y geométricos establecieron valores aproximados. Sin embargo, fue el genio griego Arquímedes de Siracusa quien, en el siglo III a.C., desarrolló un método riguroso utilizando polígonos inscritos y circunscritos para acotar el valor de pi con una precisión sin precedentes. Este enfoque geométrico, conocido como el "método de exhaustión", permitió establecer que pi se encontraba entre 3.1408 y 3.1429, un logro notable considerando las herramientas matemáticas de la época.</p>
+            <p>A lo largo de los siglos siguientes, matemáticos de diversas culturas contribuyeron al cálculo de pi, incluyendo a los chinos, indios y árabes, quienes desarrollaron series infinitas y algoritmos más sofisticados. En la era moderna, la invención del cálculo infinitesimal por Newton y Leibniz abrió nuevas posibilidades, mientras que el advenimiento de las computadoras en el siglo XX revolucionó completamente el cálculo de dígitos de pi, permitiendo determinar billones de decimales. Hoy, pi trasciende la geometría básica y aparece en fórmulas fundamentales de física, ingeniería, teoría de probabilidades y hasta en el procesamiento de señales digitales, demostrando su profunda conexión con la estructura misma de la realidad matemática.</p>
         </section>
 
         <section id="evaluar" class="tab-content">
@@ -67,7 +246,7 @@
                     <option value="Math.abs(x)">f(x) = |x|</option>
                     <option value="Math.PI * x">f(x) = π * x</option>
                 </select>
-                <input type="number" id="valX" placeholder="Valor de x">
+                <input type="number" id="valX" placeholder="Valor de x" step="any">
                 <button class="calc" onclick="calcular()">CALCULAR</button>
                 <div id="resultado">Resultado: -</div>
             </div>
@@ -75,8 +254,9 @@
 
         <section id="resumen" class="tab-content">
             <h1>Resumen del Video: Python</h1>
-            <p>Python se destaca como un lenguaje de alto nivel y propósito general, cuya sintaxis limpia y cercana al lenguaje humano lo convierte en la herramienta ideal tanto para principiantes como para expertos en ciencia de datos e inteligencia artificial. Durante el curso, se enfatiza su naturaleza de tipado dinámico, lo que permite una mayor agilidad al programar, y se explica su versatilidad para resolver problemas complejos con pocas líneas de código.</p>
-            <p>En cuanto a los fundamentos técnicos, el contenido abarca desde los tipos de datos básicos como cadenas de texto, enteros y booleanos, hasta estructuras compuestas más avanzadas como listas, tuplas y diccionarios. Se subraya la importancia de entender que en Python los índices siempre comienzan en 0 y cómo los operadores lógicos permiten controlar el flujo de una aplicación mediante condicionales, sentencias que son la base de cualquier algoritmo lógico.</p>
+            <p>Python se ha consolidado como uno de los lenguajes de programación más influyentes y accesibles del siglo XXI, destacándose por su filosofía de diseño que prioriza la legibilidad del código y la productividad del desarrollador. Su sintaxis limpia y expresiva, que se asemeja notablemente al lenguaje humano natural, lo convierte en una herramienta ideal tanto para principiantes que dan sus primeros pasos en el mundo de la programación como para expertos que trabajan en campos avanzados como la ciencia de datos, la inteligencia artificial y el aprendizaje automático. La comunidad global de Python, caracterizada por su espíritu colaborativo y su compromiso con el código abierto, ha creado un ecosistema de bibliotecas y frameworks que amplían exponencialmente las capacidades del lenguaje.</p>
+            <p>Entre los fundamentos técnicos esenciales cubiertos en el curso, se destaca el sistema de tipos dinámico de Python, que permite una gran flexibilidad al desarrollar aplicaciones sin necesidad de declaraciones explícitas de tipo. El lenguaje ofrece una rica colección de estructuras de datos nativas, incluyendo listas mutables, tuplas inmutables, diccionarios basados en pares clave-valor y conjuntos matemáticos, cada uno optimizado para diferentes casos de uso. Un principio fundamental que se enfatiza repetidamente es la indexación basada en cero, común a la mayoría de lenguajes modernos pero crucial para evitar errores de límites al acceder a elementos de secuencias. Los operadores lógicos y de comparación, junto con las estructuras de control de flujo if/elif/else, forman la base para implementar la lógica de decisión en cualquier programa.</p>
+            <p>El paradigma de programación en Python abarca múltiples enfoques, incluyendo la programación procedural, orientada a objetos y funcional, permitiendo a los desarrolladores elegir el estilo más adecuado para cada problema. La creación de funciones mediante la palabra clave 'def' y la organización modular del código facilitan la reutilización y el mantenimiento a largo plazo. Aspectos avanzados como la comprensión de listas, el manejo de excepciones con bloques try/except, y el uso de generadores para manejar grandes volúmenes de datos de manera eficiente, completan un panorama que muestra por qué Python continúa ganando popularidad en ámbitos académicos, científicos e industriales. La conclusión principal del curso subraya que, más allá de la sintaxis específica, lo fundamental es desarrollar un pensamiento algorítmico capaz de descomponer problemas complejos en pasos manejables que una computadora pueda ejecutar.</p>
         </section>
     </main>
 
@@ -96,22 +276,81 @@
             evt.currentTarget.className += " active";
         }
 
-        // FUNCIÓN PARA CALCULAR
+        // FUNCIÓN PARA CALCULAR - MEJORADA
         function calcular() {
             const x = parseFloat(document.getElementById('valX').value);
             const formula = document.getElementById('func').value;
             const resDiv = document.getElementById('resultado');
 
             if (isNaN(x)) {
-                resDiv.innerHTML = "Error: Ingrese un número.";
+                resDiv.innerHTML = "Error: Por favor, ingrese un número válido.";
+                resDiv.style.color = "#b30000";
                 return;
             }
 
             try {
+                // Validaciones específicas para ciertas funciones
+                if ((formula.includes('Math.sqrt') || formula.includes('Math.log')) && x <= 0) {
+                    resDiv.innerHTML = "Error: Para esta función, x debe ser mayor que 0.";
+                    resDiv.style.color = "#b30000";
+                    return;
+                }
+                
+                if (formula.includes('1/x') && x === 0) {
+                    resDiv.innerHTML = "Error: División por cero no permitida.";
+                    resDiv.style.color = "#b30000";
+                    return;
+                }
+                
+                // Calcular resultado
                 const res = eval(formula);
-                resDiv.innerHTML = "Resultado: " + res.toFixed(6);
+                
+                // Formatear resultado: eliminar ceros decimales innecesarios
+                let formattedResult;
+                
+                if (Number.isInteger(res)) {
+                    // Si es entero, mostrar como entero
+                    formattedResult = res.toString();
+                } else {
+                    // Redondear a 6 decimales
+                    const rounded = Math.round(res * 1000000) / 1000000;
+                    
+                    // Verificar si después de redondear es un número entero
+                    if (Number.isInteger(rounded)) {
+                        formattedResult = rounded.toString();
+                    } else {
+                        // Eliminar ceros decimales innecesarios
+                        formattedResult = parseFloat(rounded.toFixed(6)).toString();
+                        
+                        // Asegurarse de que no queden .0 al final
+                        if (formattedResult.endsWith('.0')) {
+                            formattedResult = formattedResult.slice(0, -2);
+                        }
+                        if (formattedResult.endsWith('.00')) {
+                            formattedResult = formattedResult.slice(0, -3);
+                        }
+                        if (formattedResult.endsWith('.000')) {
+                            formattedResult = formattedResult.slice(0, -4);
+                        }
+                        if (formattedResult.endsWith('.0000')) {
+                            formattedResult = formattedResult.slice(0, -5);
+                        }
+                        if (formattedResult.endsWith('.00000')) {
+                            formattedResult = formattedResult.slice(0, -6);
+                        }
+                        if (formattedResult.endsWith('.000000')) {
+                            formattedResult = formattedResult.slice(0, -7);
+                        }
+                    }
+                }
+                
+                // Mostrar resultado con buen formato
+                resDiv.innerHTML = `<strong>f(${x}) = ${formattedResult}</strong>`;
+                resDiv.style.color = "#222";
+                
             } catch (e) {
-                resDiv.innerHTML = "Error matemático.";
+                resDiv.innerHTML = "Error matemático en el cálculo.";
+                resDiv.style.color = "#b30000";
             }
         }
     </script>
